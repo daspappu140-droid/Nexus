@@ -14,14 +14,70 @@ import {
   ShieldCheckIcon,
 } from '@heroicons/react/24/outline';
 
+// Email validation regex
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Validation functions
+const validateEmail = (email) => {
+  if (!email) {
+    return 'Email is required';
+  }
+  if (!EMAIL_REGEX.test(email)) {
+    return 'Please enter a valid email address';
+  }
+  return '';
+};
+
+const validatePassword = (password) => {
+  if (!password) {
+    return 'Password is required';
+  }
+  if (password.length < 6) {
+    return 'Password must be at least 6 characters long';
+  }
+  return '';
+};
+
 export default function LoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({ email: '', password: '' });
+  const [touched, setTouched] = useState({ email: false, password: false });
+
+  const handleBlur = (field) => {
+    setTouched({ ...touched, [field]: true });
+    validateField(field, formData[field]);
+  };
+
+  const validateField = (field, value) => {
+    let error = '';
+    if (field === 'email') {
+      error = validateEmail(value);
+    } else if (field === 'password') {
+      error = validatePassword(value);
+    }
+    setErrors({ ...errors, [field]: error });
+    return error;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate all fields
+    const emailError = validateEmail(formData.email);
+    const passwordError = validatePassword(formData.password);
+    
+    setErrors({ email: emailError, password: passwordError });
+    setTouched({ email: true, password: true });
+    
+    // Stop submission if there are validation errors
+    if (emailError || passwordError) {
+      toast.error('Please fix the validation errors');
+      return;
+    }
+    
     setLoading(true);
     try {
       const res = await fetch('/api/auth/login', {
@@ -126,13 +182,28 @@ export default function LoginPage() {
                 <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-500" />
                 <input
                   type="email"
-                  required
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="input-field-dark pl-12"
+                  onChange={(e) => {
+                    setFormData({ ...formData, email: e.target.value });
+                    if (touched.email) {
+                      validateField('email', e.target.value);
+                    }
+                  }}
+                  onBlur={() => handleBlur('email')}
+                  className={`input-field-dark pl-12 ${errors.email && touched.email ? 'border-red-500 focus:border-red-500' : ''}`}
                   placeholder="you@example.com"
+                  aria-invalid={errors.email && touched.email ? 'true' : 'false'}
+                  aria-describedby={errors.email && touched.email ? 'email-error' : undefined}
                 />
               </div>
+              {errors.email && touched.email && (
+                <p id="email-error" className="text-sm text-red-400 mt-1 flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  {errors.email}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -141,11 +212,18 @@ export default function LoginPage() {
                 <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-500" />
                 <input
                   type={showPassword ? 'text' : 'password'}
-                  required
                   value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="input-field-dark pl-12 pr-12"
+                  onChange={(e) => {
+                    setFormData({ ...formData, password: e.target.value });
+                    if (touched.password) {
+                      validateField('password', e.target.value);
+                    }
+                  }}
+                  onBlur={() => handleBlur('password')}
+                  className={`input-field-dark pl-12 pr-12 ${errors.password && touched.password ? 'border-red-500 focus:border-red-500' : ''}`}
                   placeholder="Enter your password"
+                  aria-invalid={errors.password && touched.password ? 'true' : 'false'}
+                  aria-describedby={errors.password && touched.password ? 'password-error' : undefined}
                 />
                 <button
                   type="button"
@@ -155,6 +233,14 @@ export default function LoginPage() {
                   {showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
                 </button>
               </div>
+              {errors.password && touched.password && (
+                <p id="password-error" className="text-sm text-red-400 mt-1 flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  {errors.password}
+                </p>
+              )}
             </div>
 
             <button
