@@ -1,0 +1,7 @@
+{
+  "crons": [{ "path": "/api/cron/settle", "schedule": "0 5 * * *" }],
+  "functions": {
+    "app/api/**": { "maxDuration": 60 },
+    "app/api/cron/**": { "maxDuration": 300 }
+  }
+}
