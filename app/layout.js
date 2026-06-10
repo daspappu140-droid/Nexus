@@ -5,6 +5,11 @@ export const metadata = {
   title: 'NexusBank - Next Generation Digital Banking Platform',
   description: 'India\'s most advanced digital banking platform. Virtual cards, instant settlements, corporate solutions, and enterprise-grade security.',
   keywords: 'digital banking, virtual cards, settlements, corporate banking, fintech',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -2,26 +2,17 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
 import connectDB from '@/lib/mongodb';
-import User from '@/models/User';
+import Broadcast from '@/models/Broadcast';
 
-export async function GET(request) {
+export async function GET() {
   try {
     const token = cookies().get('token')?.value;
     if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     const decoded = verifyToken(token);
     if (!decoded || decoded.role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-
     await connectDB();
-
-    const { searchParams } = new URL(request.url);
-    const role = searchParams.get('role') || 'user';
-
-    const users = await User.find({ role })
-      .select('-password')
-      .sort({ createdAt: -1 })
-      .limit(500);
-
-    return NextResponse.json({ success: true, users });
+    const broadcasts = await Broadcast.find().sort({ createdAt: -1 });
+    return NextResponse.json({ success: true, broadcasts });
   } catch (error) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
@@ -33,24 +24,13 @@ export async function POST(request) {
     if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     const decoded = verifyToken(token);
     if (!decoded || decoded.role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-
     await connectDB();
-    const { name, email, phone, password, distributorId } = await request.json();
-
-    const bcrypt = require('bcryptjs');
-    const hashedPassword = await bcrypt.hash(password || '123456', 12);
-
-    const user = await User.create({
-      name, email: email.toLowerCase(), phone,
-      password: hashedPassword,
-      role: 'user',
-      status: 'approved',
-      distributorId: distributorId || null,
-    });
-
-    return NextResponse.json({ success: true, user: { ...user.toObject(), password: undefined } }, { status: 201 });
+    const { message, type } = await request.json();
+    // Deactivate previous
+    await Broadcast.updateMany({ isActive: true }, { isActive: false });
+    const broadcast = await Broadcast.create({ message, type, isActive: true, createdBy: decoded.userId });
+    return NextResponse.json({ success: true, broadcast }, { status: 201 });
   } catch (error) {
-    if (error.code === 11000) return NextResponse.json({ error: 'Email already exists' }, { status: 409 });
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
