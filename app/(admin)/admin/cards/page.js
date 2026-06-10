@@ -48,7 +48,7 @@ export default function AdminCardsPage() {
         <StatsCard icon={CreditCardIcon} title="Expired" value={stats.expired} color="from-dark-400 to-dark-500" />
       </div>
       <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1"><MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-dark-400" /><input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by card number or user..." className="input-field pl-11" /></div>
+        <div className="relative flex-1"><MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" /><input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by card number or user..." className="input-field pl-11" /></div>
         <select value={filter} onChange={(e) => setFilter(e.target.value)} className="input-field w-full sm:w-40"><option value="all">All</option><option value="active">Active</option><option value="frozen">Frozen</option><option value="expired">Expired</option></select>
       </div>
       <DataTable columns={columns} data={filtered} loading={loading} />

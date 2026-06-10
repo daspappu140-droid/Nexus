@@ -44,7 +44,7 @@ export default function BroadcastBar() {
       >
         <div className="flex items-center justify-between px-4 py-2.5 gap-3">
           <div className="flex items-center gap-2.5 min-w-0">
-            <TypeIcon className={`w-4.5 h-4.5 flex-shrink-0 ${style.text}`} />
+            <TypeIcon className={`w-5 h-5 flex-shrink-0 ${style.text}`} />
             <p className={`text-sm font-medium truncate ${style.text}`}>{broadcast.message}</p>
           </div>
           <button

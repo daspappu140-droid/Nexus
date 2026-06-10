@@ -87,13 +87,13 @@ export default function AdminUserSettlementsPage() {
       render: (row) => row.status === 'pending' && (
         <div className="flex items-center gap-1">
           <button onClick={() => handleApprove(row._id)} className="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50" title="Approve">
-            <CheckCircleIcon className="w-4.5 h-4.5" />
+            <CheckCircleIcon className="w-5 h-5" />
           </button>
           <button onClick={() => setRejectModal(row._id)} className="p-1.5 rounded-lg text-red-600 hover:bg-red-50" title="Reject">
-            <XCircleIcon className="w-4.5 h-4.5" />
+            <XCircleIcon className="w-5 h-5" />
           </button>
           <button onClick={() => handleHold(row.userId?._id, !row.userId?.isOnHold)} className="p-1.5 rounded-lg text-amber-600 hover:bg-amber-50" title="Hold/Unhold">
-            {row.userId?.isOnHold ? <PlayCircleIcon className="w-4.5 h-4.5" /> : <PauseCircleIcon className="w-4.5 h-4.5" />}
+            {row.userId?.isOnHold ? <PlayCircleIcon className="w-5 h-5" /> : <PauseCircleIcon className="w-5 h-5" />}
           </button>
         </div>
       ),

@@ -38,7 +38,7 @@ export default function AdminCorporatesPage() {
         <StatsCard icon={UsersIcon} title="Active" value={corporates.filter(c => c.status === 'approved').length} color="from-blue-500 to-indigo-500" />
         <StatsCard icon={WalletIcon} title="Total Wallet" value={`₹${corporates.reduce((a, c) => a + (c.walletBalance || 0), 0).toLocaleString('en-IN')}`} color="from-purple-500 to-violet-500" />
       </div>
-      <div className="relative"><MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-dark-400" /><input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search corporates..." className="input-field pl-11" /></div>
+      <div className="relative"><MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" /><input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search corporates..." className="input-field pl-11" /></div>
       <DataTable columns={columns} data={filtered} loading={loading} />
     </div>
   );

@@ -230,7 +230,7 @@ export default function Sidebar({ userRole = 'user', userName = 'User', userEmai
               <div className="p-4 flex items-center justify-between border-b border-dark-800/50">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center">
-                    <BuildingLibraryIcon className="w-4.5 h-4.5 text-white" />
+                    <BuildingLibraryIcon className="w-5 h-5 text-white" />
                   </div>
                   <span className="text-lg font-bold text-white">Nexus<span className="text-primary-400">Bank</span></span>
                 </div>
@@ -284,7 +284,7 @@ export default function Sidebar({ userRole = 'user', userName = 'User', userEmai
           {!collapsed && (
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center shadow-neon">
-                <BuildingLibraryIcon className="w-4.5 h-4.5 text-white" />
+                <BuildingLibraryIcon className="w-5 h-5 text-white" />
               </div>
               <div>
                 <span className="text-base font-bold text-white">Nexus<span className="text-primary-400">Bank</span></span>

@@ -106,19 +106,19 @@ export default function AdminUsersPage() {
         <div className="flex items-center gap-1">
           {row.status === 'pending' && (
             <button onClick={() => handleApprove(row._id)} className="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50" title="Approve">
-              <CheckCircleIcon className="w-4.5 h-4.5" />
+              <CheckCircleIcon className="w-5 h-5" />
             </button>
           )}
           <button onClick={() => { setSelectedUser(row); setShowModal('wallet'); }} className="p-1.5 rounded-lg text-blue-600 hover:bg-blue-50" title="Wallet">
-            <WalletIcon className="w-4.5 h-4.5" />
+            <WalletIcon className="w-5 h-5" />
           </button>
           {row.status !== 'blocked' ? (
             <button onClick={() => handleBlock(row._id)} className="p-1.5 rounded-lg text-red-600 hover:bg-red-50" title="Block">
-              <NoSymbolIcon className="w-4.5 h-4.5" />
+              <NoSymbolIcon className="w-5 h-5" />
             </button>
           ) : (
             <button onClick={() => handleApprove(row._id)} className="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50" title="Unblock">
-              <CheckCircleIcon className="w-4.5 h-4.5" />
+              <CheckCircleIcon className="w-5 h-5" />
             </button>
           )}
         </div>
@@ -144,7 +144,7 @@ export default function AdminUsersPage() {
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-dark-400" />
+          <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
           <input
             type="text"
             value={search}

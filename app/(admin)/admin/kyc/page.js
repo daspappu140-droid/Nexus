@@ -116,15 +116,15 @@ export default function AdminKYCPage() {
           {row.status === 'pending' && (
             <>
               <button onClick={() => handleApprove(row._id)} className="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50" title="Approve">
-                <CheckCircleIcon className="w-4.5 h-4.5" />
+                <CheckCircleIcon className="w-5 h-5" />
               </button>
               <button onClick={() => setRejectModal(row._id)} className="p-1.5 rounded-lg text-red-600 hover:bg-red-50" title="Reject">
-                <XCircleIcon className="w-4.5 h-4.5" />
+                <XCircleIcon className="w-5 h-5" />
               </button>
             </>
           )}
           <button onClick={() => handleReKYC(row._id)} className="p-1.5 rounded-lg text-amber-600 hover:bg-amber-50" title="Re-KYC">
-            <ArrowPathIcon className="w-4.5 h-4.5" />
+            <ArrowPathIcon className="w-5 h-5" />
           </button>
         </div>
       ),

@@ -104,7 +104,7 @@ export function ActionBtn({ icon: Icon, onClick, color = 'text-dark-500 hover:bg
       title={title}
       className={`p-2 rounded-xl transition-all ${color} disabled:opacity-40 disabled:cursor-not-allowed`}
     >
-      <Icon className="w-4.5 h-4.5" />
+      <Icon className="w-5 h-5" />
     </button>
   );
 }

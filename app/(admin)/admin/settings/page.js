@@ -25,7 +25,7 @@ export default function AdminSettingsPage() {
         {/* General */}
         <div className="bg-white rounded-2xl border border-dark-100 shadow-card p-6">
           <div className="flex items-center gap-3 mb-5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center"><Cog6ToothIcon className="w-4.5 h-4.5 text-white" /></div>
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center"><Cog6ToothIcon className="w-5 h-5 text-white" /></div>
             <h3 className="font-bold text-dark-900">General Settings</h3>
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
@@ -38,7 +38,7 @@ export default function AdminSettingsPage() {
         {/* Financial */}
         <div className="bg-white rounded-2xl border border-dark-100 shadow-card p-6">
           <div className="flex items-center gap-3 mb-5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center"><CurrencyRupeeIcon className="w-4.5 h-4.5 text-white" /></div>
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center"><CurrencyRupeeIcon className="w-5 h-5 text-white" /></div>
             <h3 className="font-bold text-dark-900">Financial Settings</h3>
           </div>
           <div className="grid sm:grid-cols-3 gap-4">
@@ -51,7 +51,7 @@ export default function AdminSettingsPage() {
         {/* Security */}
         <div className="bg-white rounded-2xl border border-dark-100 shadow-card p-6">
           <div className="flex items-center gap-3 mb-5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-red-500 to-rose-600 flex items-center justify-center"><ShieldCheckIcon className="w-4.5 h-4.5 text-white" /></div>
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-red-500 to-rose-600 flex items-center justify-center"><ShieldCheckIcon className="w-5 h-5 text-white" /></div>
             <h3 className="font-bold text-dark-900">Security</h3>
           </div>
           <div className="flex items-center justify-between p-4 bg-dark-50 rounded-xl">

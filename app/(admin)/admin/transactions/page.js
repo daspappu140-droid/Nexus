@@ -64,7 +64,7 @@ export default function AdminTransactionsPage() {
       <PageHeader icon={ListBulletIcon} title="Transactions" subtitle="All platform transactions" color="from-indigo-500 to-purple-600" />
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-dark-400" />
+          <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
           <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by name or reference..." className="input-field pl-11" />
         </div>
         <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="input-field w-full sm:w-44">

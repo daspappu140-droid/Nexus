@@ -30,8 +30,8 @@ export default function AdminNotificationsPage() {
       header: 'Actions',
       render: (row) => row.status === 'pending' && (
         <div className="flex items-center gap-1">
-          <button className="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50" title="Approve"><CheckCircleIcon className="w-4.5 h-4.5" /></button>
-          <button className="p-1.5 rounded-lg text-red-600 hover:bg-red-50" title="Reject"><XCircleIcon className="w-4.5 h-4.5" /></button>
+          <button className="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50" title="Approve"><CheckCircleIcon className="w-5 h-5" /></button>
+          <button className="p-1.5 rounded-lg text-red-600 hover:bg-red-50" title="Reject"><XCircleIcon className="w-5 h-5" /></button>
         </div>
       ),
     },
