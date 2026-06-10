@@ -120,7 +120,18 @@ export default function AdminDistributorsPage() {
               <button onClick={() => setWalletAction('deduct')} className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all ${walletAction === 'deduct' ? 'bg-red-500 text-white' : 'bg-dark-100 text-dark-600'}`}>Deduct</button>
             </div>
             <input type="number" value={walletAmount} onChange={(e) => setWalletAmount(e.target.value)} placeholder="Enter amount" className="input-field" />
-            <button onClick={() => { toast.success('Wallet updated'); setWalletModal(null); }} className="btn-primary w-full">Confirm</button>
+            <button onClick={async () => {
+              if (!walletAmount || Number(walletAmount) <= 0) { toast.error('Enter valid amount'); return; }
+              try {
+                const res = await fetch(`/api/admin/users/${walletModal._id}/wallet`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ amount: Number(walletAmount), action: walletAction }),
+                });
+                if (res.ok) { toast.success('Wallet updated'); setWalletModal(null); setWalletAmount(''); fetchDistributors(); }
+                else { const data = await res.json(); toast.error(data.error || 'Failed'); }
+              } catch { toast.error('Error'); }
+            }} className="btn-primary w-full">Confirm</button>
           </div>
         </AdminModal>
       )}
@@ -132,7 +143,18 @@ export default function AdminDistributorsPage() {
             <input type="email" placeholder="Email" className="input-field" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
             <input type="tel" placeholder="Phone" className="input-field" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
             <input type="password" placeholder="Password" className="input-field" value={formData.password} onChange={(e) => setFormData({...formData, password: e.target.value})} />
-            <button onClick={() => { toast.success('Distributor created'); setShowCreate(false); }} className="btn-primary w-full">Create Distributor</button>
+            <button onClick={async () => {
+              if (!formData.name || !formData.email) { toast.error('Name and email required'); return; }
+              try {
+                const res = await fetch('/api/admin/users', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ ...formData, role: 'distributor' }),
+                });
+                if (res.ok) { toast.success('Distributor created'); setShowCreate(false); setFormData({ name: '', email: '', phone: '', password: '' }); fetchDistributors(); }
+                else { const data = await res.json(); toast.error(data.error || 'Failed'); }
+              } catch { toast.error('Error'); }
+            }} className="btn-primary w-full">Create Distributor</button>
           </div>
         </AdminModal>
       )}

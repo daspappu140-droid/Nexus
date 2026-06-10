@@ -114,7 +114,18 @@ export default function AdminMasterDistributorsPage() {
               <button onClick={() => setWalletAction('deduct')} className={`flex-1 py-2.5 rounded-xl text-sm font-semibold ${walletAction === 'deduct' ? 'bg-red-500 text-white' : 'bg-dark-100 text-dark-600'}`}>Deduct</button>
             </div>
             <input type="number" value={walletAmount} onChange={(e) => setWalletAmount(e.target.value)} placeholder="Enter amount" className="input-field" />
-            <button onClick={() => { toast.success('Wallet updated'); setWalletModal(null); }} className="btn-primary w-full">Confirm</button>
+            <button onClick={async () => {
+              if (!walletAmount || Number(walletAmount) <= 0) { toast.error('Enter valid amount'); return; }
+              try {
+                const res = await fetch(`/api/admin/users/${walletModal._id}/wallet`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ amount: Number(walletAmount), action: walletAction }),
+                });
+                if (res.ok) { toast.success('Wallet updated'); setWalletModal(null); setWalletAmount(''); fetchMDs(); }
+                else { const data = await res.json(); toast.error(data.error || 'Failed'); }
+              } catch { toast.error('Error'); }
+            }} className="btn-primary w-full">Confirm</button>
           </div>
         </AdminModal>
       )}

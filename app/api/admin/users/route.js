@@ -36,17 +36,27 @@ export async function POST(request) {
     if (!decoded || decoded.role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
     await connectDB();
-    const { name, email, phone, password, distributorId } = await request.json();
+    const { name, email, phone, password, role, distributorId, masterDistributorId } = await request.json();
+
+    if (!name || !email) {
+      return NextResponse.json({ error: 'Name and email are required' }, { status: 400 });
+    }
 
     const bcrypt = require('bcryptjs');
     const hashedPassword = await bcrypt.hash(password || '123456', 12);
 
+    const validRoles = ['user', 'distributor', 'masterdistributor', 'corporate', 'employee'];
+    const userRole = validRoles.includes(role) ? role : 'user';
+
     const user = await User.create({
-      name, email: email.toLowerCase(), phone,
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
+      phone: phone || null,
       password: hashedPassword,
-      role: 'user',
+      role: userRole,
       status: 'approved',
       distributorId: distributorId || null,
+      masterDistributorId: masterDistributorId || null,
     });
 
     return NextResponse.json({ success: true, user: { ...user.toObject(), password: undefined } }, { status: 201 });
